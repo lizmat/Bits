@@ -1,6 +1,7 @@
 Revision history for Bits
 
 {{$NEXT}}
+    - adapt documentation: negative values are also ok
 
 0.0.1  2019-01-12T00:06:18+01:00
     - Initial version

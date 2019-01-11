@@ -1,6 +1,6 @@
 use v6.c;
 
-module Bits:ver<0.0.1>:auth<cpan:ELIZABETH> {
+module Bits:ver<0.0.2>:auth<cpan:ELIZABETH> {
     use nqp;
 
     my constant $nibble2pos = nqp::list(
@@ -152,24 +152,23 @@ values.
 
 =head2 bit
 
-  sub bit(UInt:D value, UInt:D bit --> Bool:D)
+  sub bit(Int:D value, UInt:D bit --> Bool:D)
 
-Takes an unsigned integer value and a bit number and returns whether that bit
-is set.
+Takes a integer value and a bit number and returns whether that bit is set.
 
 =head2 bits
 
-  sub bits(UInt:D value --> Seq:D)
+  sub bits(Int:D value --> Seq:D)
 
-Takes an unsigned integer value and returns a C<Seq>uence of the bit numbers
-that are set in the value.
+Takes a integer value and returns a C<Seq>uence of the bit numbers that are
+significant in the value.  For negative values, these are the bits that are 0.
 
 =head2 bitcnt
 
-  sub bitcnt(UInt:D value --> Int:D)
+  sub bitcnt(Int:D value --> Int:D)
 
-Takes an unsigned integer value and returns the number of bits that are set
-in the value.
+Takes a integer value and returns the number of significant bits that are set
+in the value.  For negative values, this is the number of bits that are 0.
 
 =head1 AUTHOR
 
