@@ -174,8 +174,8 @@ in the value.  For negative values, this is the number of bits that are 0.
 
 Elizabeth Mattijsen <liz@wenzperl.nl>
 
-Source can be located at: https://github.com/lizmat/Map-Agnostic .
-Comments and Pull Requests are welcome.
+Source can be located at: https://github.com/lizmat/Bits .  Comments and Pull
+Requests are welcome.
 
 =head1 COPYRIGHT AND LICENSE
 
