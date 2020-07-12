@@ -5,7 +5,7 @@
   ],
   "build-depends" : [ ],
   "depends" : [ ],
-  "description" : "provide bit related functions",
+  "description" : "provide bit related functions for arbitrarily large integers",
   "license" : "Artistic-2.0",
   "name" : "Bits",
   "perl" : "6.c",
@@ -18,5 +18,5 @@
     "UTILS"
   ],
   "test-depends" : [ ],
-  "version" : "0.0.2"
+  "version" : "0.0.3"
 }

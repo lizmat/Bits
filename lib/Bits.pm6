@@ -1,6 +1,6 @@
 use v6.c;
 
-module Bits:ver<0.0.2>:auth<cpan:ELIZABETH> {
+module Bits:ver<0.0.3>:auth<cpan:ELIZABETH> {
     use nqp;
 
     my constant $nibble2pos = nqp::list(
@@ -28,21 +28,12 @@ module Bits:ver<0.0.2>:auth<cpan:ELIZABETH> {
         has     $!list;     # list of positions for current nibble
 
         method !SET-SELF(\bitmap) {
-            my $bitmap := nqp::decont(bitmap);
-            nqp::if(
-              $bitmap && nqp::isne_I($bitmap,-1),
-              nqp::stmts(
-                ($!bitmap := nqp::if(
-                  nqp::islt_I($bitmap,0),
-                  nqp::mul_I(-2,nqp::add_I($bitmap,1,Int),Int),
-                  $bitmap
-                )),
-                ($!offset = -4),
-                ($!list  := nqp::atpos($nibble2pos,0)),
-                self
-              ),
-              Rakudo::Iterator.Empty
-            )
+            $!bitmap := nqp::islt_I(nqp::decont(bitmap),0)
+              ?? bitswap(bitmap)
+              !! nqp::decont(bitmap);
+            $!offset = -4;
+            $!list  := nqp::atpos($nibble2pos,0);
+            self
         }
         method new(\bitmap) { nqp::create(self)!SET-SELF(bitmap) }
 
@@ -85,12 +76,26 @@ module Bits:ver<0.0.2>:auth<cpan:ELIZABETH> {
         }
     }
 
+    sub bitswap(Int:D \bitmap --> Int:D) is export {
+        nqp::neg_I(nqp::add_I(nqp::decont(bitmap),1,Int),Int)
+    }
+
     sub bit(Int:D \bitmap, UInt:D \offset --> Bool:D) is export {
-        nqp::hllbool(bitmap +& (1 +< offset))
+        nqp::hllbool(
+          nqp::bitand_I(
+            nqp::if(
+              nqp::islt_I(nqp::decont(bitmap),0),
+              bitswap(bitmap),
+              nqp::decont(bitmap)
+            ),
+            nqp::bitshiftl_I(1,offset,Int),
+            Int
+          )
+        )
     }
 
     sub bits(Int:D \bitmap --> Seq:D) is export {
-        Seq.new( IterateBits.new(bitmap))
+        Seq.new: IterateBits.new(bitmap)
     }
 
     # nibble -> number of bits conversion
@@ -103,7 +108,7 @@ module Bits:ver<0.0.2>:auth<cpan:ELIZABETH> {
           nqp::stmts(                                 # has significant bits
             ($bitmap := nqp::if(
               nqp::isle_I($bitmap,0),
-              nqp::mul_I(-2,nqp::add_I($bitmap,1,Int),Int),
+              bitswap($bitmap),
               $bitmap
             )),
             (my int $bits = 0),
@@ -128,11 +133,11 @@ module Bits:ver<0.0.2>:auth<cpan:ELIZABETH> {
 
 =head1 NAME
 
-Bits - provide bit related functions
+Bits - provide bit related functions for arbitrarily large integers
 
 =head1 SYNOPSIS
 
-  use Bits;  # exports "bit", "bits", "bitcnt"
+  use Bits;  # exports "bit", "bits", "bitcnt", "bitswap"
 
   say bit(8, 3);    # 1000 -> True
   say bit(7, 3);    # 0111 -> False
@@ -143,10 +148,16 @@ Bits - provide bit related functions
   say bitcnt(8);    # 1000 -> 1
   say bitcnt(7);    # 0111 -> 3
 
+  say bitswap(1);   # 0001 -> 1110
+  say bitswap(-1);  # 1111 -> 0000
+
 =head1 DESCRIPTION
 
-This module exports a number of function to handle bits in unsigned integer
-values.
+This module exports a number of function to handle significant bits in
+arbitrarily large integer values, aka bitmaps.  If the specified value is
+zero or positive, then the on-bits will be considered significant.  If the
+specified value is negative, then the off-bits in the value will be
+considered significant.
 
 =head1 SUBROUTINES
 
@@ -154,7 +165,8 @@ values.
 
   sub bit(Int:D value, UInt:D bit --> Bool:D)
 
-Takes a integer value and a bit number and returns whether that bit is set.
+Takes a integer value and a bit number and returns whether that bit is
+significant (1 for positive values, 0 for negative values).
 
 =head2 bits
 
@@ -170,6 +182,13 @@ significant in the value.  For negative values, these are the bits that are 0.
 Takes a integer value and returns the number of significant bits that are set
 in the value.  For negative values, this is the number of bits that are 0.
 
+=head2 bitswap
+
+  sub bitswap(Int:D value --> Int:D)
+
+Takes an integer value and returns an integer value with all of the 1-bits
+turned to 0-bits and vice-versa.
+
 =head1 AUTHOR
 
 Elizabeth Mattijsen <liz@wenzperl.nl>
@@ -179,10 +198,10 @@ Requests are welcome.
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2019 Elizabeth Mattijsen
+Copyright 2019-2020 Elizabeth Mattijsen
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 
 =end pod
 
-# vim: ft=perl6 expandtab sw=4
+# vim: expandtab shiftwidth=4
