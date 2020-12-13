@@ -1,22 +1,26 @@
 {
-  "auth" : "cpan:ELIZABETH",
-  "authors" : [
+  "auth": "cpan:ELIZABETH",
+  "authors": [
     "Elizabeth Mattijsen"
   ],
-  "build-depends" : [ ],
-  "depends" : [ ],
-  "description" : "provide bit related functions for arbitrarily large integers",
-  "license" : "Artistic-2.0",
-  "name" : "Bits",
-  "perl" : "6.c",
-  "provides" : {
-    "Bits" : "lib/Bits.pm6"
+  "build-depends": [
+  ],
+  "depends": [
+  ],
+  "description": "provide bit related functions for arbitrarily large integers",
+  "license": "Artistic-2.0",
+  "name": "Bits",
+  "perl": "6.*",
+  "provides": {
+    "Bits": "lib/Bits.pm6"
   },
-  "resources" : [ ],
-  "source-url" : "https://github.com/lizmat/Bits.git",
-  "tags" : [
+  "resources": [
+  ],
+  "source-url": "https://github.com/lizmat/Bits.git",
+  "tags": [
     "UTILS"
   ],
-  "test-depends" : [ ],
-  "version" : "0.0.3"
+  "test-depends": [
+  ],
+  "version": "0.0.4"
 }

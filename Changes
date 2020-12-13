@@ -2,6 +2,10 @@ Revision history for Bits
 
 {{$NEXT}}
 
+0.0.4  2020-12-13T23:57:26+01:00
+    - Use the highest possible Raku version
+    - Fix some typos in the pod
+
 0.0.3  2020-07-12T23:08:32+02:00
     - Add "bitswap" sub for swapping all bits.
     - Provide full support for negative values for all subs.

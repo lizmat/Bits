@@ -33,21 +33,21 @@ bit
 
     sub bit(Int:D value, UInt:D bit --> Bool:D)
 
-Takes a integer value and a bit number and returns whether that bit is significant (1 for positive values, 0 for negative values).
+Takes an integer value and a bit number and returns whether that bit is significant (1 for positive values, 0 for negative values).
 
 bits
 ----
 
     sub bits(Int:D value --> Seq:D)
 
-Takes a integer value and returns a `Seq`uence of the bit numbers that are significant in the value. For negative values, these are the bits that are 0.
+Takes an integer value and returns a `Seq`uence of the bit numbers that are significant in the value. For negative values, these are the bits that are 0.
 
 bitcnt
 ------
 
     sub bitcnt(Int:D value --> Int:D)
 
-Takes a integer value and returns the number of significant bits that are set in the value. For negative values, this is the number of bits that are 0.
+Takes an integer value and returns the number of significant bits that are set in the value. For negative values, this is the number of bits that are 0.
 
 bitswap
 -------
