@@ -2,6 +2,9 @@ Revision history for Bits
 
 {{$NEXT}}
 
+0.0.6  2021-11-07T11:57:35+01:00
+    - Remove actual module specification, we don't need it
+
 0.0.5  2021-09-08T13:18:02+02:00
     - Change module extension to .rakumod
     - Migrate to zef ecosystem
