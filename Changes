@@ -1,6 +1,10 @@
 Revision history for Bits
 
 {{$NEXT}}
+    - Add CI badge for each OS
+    - Modernized pod
+    - Add sponsor link
+    - Update copyright year
 
 0.0.6  2021-11-07T11:57:35+01:00
     - Remove actual module specification, we don't need it
