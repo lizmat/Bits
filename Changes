@@ -1,6 +1,8 @@
 Revision history for Bits
 
 {{$NEXT}}
+
+0.0.7  2025-01-09T19:13:17+01:00
     - Add CI badge for each OS
     - Modernized pod
     - Add sponsor link
